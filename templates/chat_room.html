@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>채팅방 #{{ room.id }}</title>
+  <script src="https://cdn.socket.io/4.3.2/socket.io.min.js"></script>
+  <script>
+    const socket = io();
+    window.onload = () => {
+      const form = document.getElementById("chat-form");
+      const input = document.getElementById("message-input");
+      const chatBox = document.getElementById("chat-box");
+
+      // 채팅방 참가
+      socket.emit("join", { room_id: {{ room.id }} });
+
+      // 메시지 전송
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const msg = input.value.trim();
+        if (msg) {
+          socket.emit("message", {
+            room_id: {{ room.id }},
+            content: msg
+          });
+          input.value = "";
+        }
+      });
+
+      // 메시지 수신
+      socket.on("message", (data) => {
+        const p = document.createElement("p");
+        p.innerHTML = `<strong>${data.sender_id}</strong>: ${data.content}`;
+        p.classList.add("text-sm", "text-gray-700", "mb-1");
+        chatBox.appendChild(p);
+        chatBox.scrollTop = chatBox.scrollHeight;
+      });
+    }
+  </script>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 py-10 px-4">
+  <div class="max-w-2xl mx-auto bg-white p-6 rounded shadow">
+    <h2 class="text-xl font-bold mb-4">💬 채팅방 #{{ room.id }}</h2>
+
+    <div id="chat-box" class="h-80 overflow-y-auto border p-4 mb-4 bg-gray-50 rounded"></div>
+
+    <form id="chat-form" class="flex gap-2">
+      <input id="message-input" type="text" placeholder="메시지를 입력하세요"
+             class="flex-1 border px-4 py-2 rounded" required>
+      <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">보내기</button>
+    </form>
+  </div>
+</body>
+</html>

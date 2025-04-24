@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>전체 채팅방</title>
+  <script src="https://cdn.socket.io/4.3.2/socket.io.min.js"></script>
+  <script src="{{ url_for('static', filename='js/chat.js') }}"></script>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 p-6">
+  <div class="max-w-2xl mx-auto bg-white shadow-lg rounded p-6">
+    <h2 class="text-2xl font-bold mb-4">💬 전체 채팅방</h2>
+
+    <!-- 채팅창 -->
+    <div id="chat-box" class="h-80 overflow-y-auto border p-3 rounded bg-gray-50 mb-4"></div>
+
+    <!-- 입력폼 -->
+    <form id="chat-form" class="flex gap-2">
+      <input id="message-input" type="text" placeholder="메시지를 입력하세요"
+             class="flex-1 px-4 py-2 border rounded" required>
+      <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">보내기</button>
+    </form>
+  </div>
+</body>
+</html>

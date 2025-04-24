@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ product.name }} - 상세 보기</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 py-10 px-4">
+  <div class="max-w-xl mx-auto bg-white p-6 rounded-lg shadow-md">
+    {% if product.image %}
+      <img src="{{ url_for('static', filename='uploads/' + product.image) }}" alt="상품 이미지" class="w-full h-64 object-cover rounded mb-4">
+    {% endif %}
+
+    <h1 class="text-2xl font-bold mb-2">{{ product.name }}</h1>
+
+    {% if product.is_hidden %}
+      <p class="text-red-500 font-semibold mb-2">🚫 이 상품은 신고 누적으로 차단된 상태입니다.</p>
+    {% endif %}
+
+    {% set price_str = '{:,}'.format(product.price) %}
+    <p class="text-lg text-gray-700 mb-4">{{ price_str }} 원</p>
+
+    <hr class="my-4">
+
+    <p class="text-sm text-gray-600">🕒 등록일: {{ product.created_at.strftime('%Y-%m-%d %H:%M') }}</p>
+    <p class="text-sm text-gray-600">👤 등록자: {{ user.username }}</p>
+
+    {% if session.get('user_id') and session.get('user_id') != user.id %}
+      <a href="/chat/start/{{ product.id }}"
+         class="inline-block mt-4 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 text-sm">
+        💬 채팅하기
+      </a>
+    {% endif %}
+
+    <div class="mt-6 flex flex-col gap-2">
+      <a href="/products" class="text-blue-600 hover:underline text-sm">← 전체 상품 목록으로</a>
+      <a href="/report?product_id={{ product.id }}" class="text-red-500 hover:underline text-sm">
+        ⚠️ 이 상품 신고하기
+      </a>
+      <a href="/report?user_id={{ user.id }}" class="text-red-500 hover:underline text-sm">
+        👤 이 판매자 신고하기
+      </a>
+    </div>
+  </div>
+</body>
+</html>

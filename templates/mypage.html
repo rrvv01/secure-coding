@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>마이페이지</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-50 min-h-screen flex justify-center items-center">
+  <div class="bg-white p-8 rounded-xl shadow-md w-full max-w-md">
+    <h2 class="text-2xl font-bold mb-6 text-center">마이페이지</h2>
+
+    <!-- 사용자 정보 -->
+    <p class="mb-4 text-gray-700">👤 <strong>아이디:</strong> {{ user.username }}</p>
+    <p class="mb-4 text-gray-700">📧 <strong>이메일:</strong> {{ user.email }}</p>
+
+    <!-- 자기소개 수정 -->
+    <form method="POST" action="/mypage" class="space-y-4 mb-8">
+      <label class="block">
+        ✍️ <strong>자기소개 수정:</strong>
+        <textarea name="intro" class="w-full mt-2 border rounded px-3 py-2" rows="4">{{ user.intro }}</textarea>
+      </label>
+      <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600">수정하기</button>
+    </form>
+
+    <!-- 비밀번호 변경 -->
+    <hr class="my-6">
+    <h3 class="text-lg font-semibold mb-2">비밀번호 변경</h3>
+    <form method="POST" action="/change-password" class="space-y-4">
+      <input type="password" name="current_password" placeholder="현재 비밀번호" class="w-full border px-4 py-2 rounded" required>
+      <input type="password" name="new_password" placeholder="새 비밀번호" class="w-full border px-4 py-2 rounded" required>
+      <input type="password" name="confirm_password" placeholder="새 비밀번호 확인" class="w-full border px-4 py-2 rounded" required>
+      <button type="submit" class="w-full bg-yellow-500 text-white py-2 rounded hover:bg-yellow-600">비밀번호 변경</button>
+    </form>
+
+    <!-- 내가 등록한 상품 목록 -->
+    <hr class="my-6">
+    <h3 class="text-lg font-semibold mb-2">내가 등록한 상품</h3>
+    <div class="grid grid-cols-1 gap-4">
+      {% for p in my_products %}
+        <div class="flex items-center justify-between border p-3 rounded bg-gray-50">
+          <div>
+            <h4 class="font-semibold">{{ p.name }}</h4>
+            <p class="text-sm text-gray-600">{{ '{:,}'.format(p.price) }} 원</p>
+          </div>
+          <div class="flex gap-2">
+            <a href="/products/{{ p.id }}/edit" class="text-blue-600 hover:underline text-sm">수정</a>
+            <form action="/products/{{ p.id }}/delete" method="POST" onsubmit="return confirm('정말 삭제할까요?')">
+              <button type="submit" class="text-red-600 hover:underline text-sm">삭제</button>
+            </form>
+          </div>
+        </div>
+      {% else %}
+        <p class="text-sm text-gray-400">등록한 상품이 없습니다.</p>
+      {% endfor %}
+    </div>
+
+    <!-- 홈으로 돌아가기 -->
+    <div class="mt-6 text-center">
+      <a href="/" class="text-sm text-gray-500 hover:underline">← 메인으로 돌아가기</a>
+    </div>
+  </div>
+</body>
+</html>

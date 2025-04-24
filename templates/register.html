@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>회원가입</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+  <div class="bg-white p-8 rounded-xl shadow-md w-full max-w-md">
+    <h2 class="text-2xl font-bold mb-6 text-center">회원가입</h2>
+    <form action="/register" method="POST" class="space-y-4">
+      <input name="username" type="text" placeholder="아이디" class="w-full border px-4 py-2 rounded" required />
+      <input name="email" type="email" placeholder="이메일" class="w-full border px-4 py-2 rounded" required />
+      <input name="password" type="password" placeholder="비밀번호" class="w-full border px-4 py-2 rounded" required />
+      <textarea name="intro" placeholder="자기소개 (선택)" class="w-full border px-4 py-2 rounded h-20"></textarea>
+      <button type="submit" class="w-full bg-green-500 text-white py-2 rounded hover:bg-green-600">회원가입</button>
+    </form>
+  </div>
+</body>
+</html>

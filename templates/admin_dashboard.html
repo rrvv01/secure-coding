@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>관리자 대시보드 | Tiny Market</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-white text-gray-900">
+  <header class="px-4 py-3 shadow-sm sticky top-0 bg-white z-50">
+    <div class="max-w-6xl mx-auto flex justify-between items-center">
+      <h1 class="text-xl font-bold text-red-500">🧺 GS Market - 관리자</h1>
+      <nav class="flex gap-4 text-sm">
+        <a href="/" class="text-gray-700 hover:text-red-500">홈으로</a>
+        <a href="/logout" class="text-gray-700 hover:text-red-500">로그아웃</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 py-6">
+    <h2 class="text-2xl font-bold mb-6">📊 관리자 대시보드</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="bg-red-100 p-5 rounded-lg shadow">
+        <h3 class="text-lg font-semibold mb-2">신고된 상품 목록</h3>
+        <p class="text-sm text-gray-700">관리자 권한으로 신고된 상품을 확인하고 삭제할 수 있습니다.</p>
+        <a href="/admin/reported-products" class="text-red-600 hover:underline text-sm mt-2 inline-block">바로가기 →</a>
+      </div>
+
+      <div class="bg-yellow-100 p-5 rounded-lg shadow">
+        <h3 class="text-lg font-semibold mb-2">신고된 사용자</h3>
+        <p class="text-sm text-gray-700">신고 횟수가 많은 사용자 목록을 확인하고 계정 제재가 가능합니다.</p>
+        <a href="/admin/reported-users" class="text-yellow-700 hover:underline text-sm mt-2 inline-block">바로가기 →</a>
+      </div>
+
+      <div class="bg-green-100 p-5 rounded-lg shadow">
+        <h3 class="text-lg font-semibold mb-2">전체 사용자 관리</h3>
+        <p class="text-sm text-gray-700">등록된 유저 목록을 조회하고 삭제 또는 권한 변경이 가능합니다.</p>
+        <a href="/admin/users" class="text-green-700 hover:underline text-sm mt-2 inline-block">바로가기 →</a>
+      </div>
+
+      <div class="bg-blue-100 p-5 rounded-lg shadow">
+        <h3 class="text-lg font-semibold mb-2">전체 상품 목록</h3>
+        <p class="text-sm text-gray-700">등록된 모든 상품을 확인하고 관리할 수 있습니다.</p>
+        <a href="/admin/products" class="text-blue-700 hover:underline text-sm mt-2 inline-block">바로가기 →</a>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

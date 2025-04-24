@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>상품 등록</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 flex justify-center items-center min-h-screen">
+  <div class="bg-white p-8 rounded-xl shadow-md w-full max-w-lg">
+    <h2 class="text-2xl font-bold mb-6 text-center">상품 등록</h2>
+    <form action="/products/new" method="POST" enctype="multipart/form-data" class="space-y-4">
+      <input type="text" name="name" placeholder="상품명" class="w-full px-4 py-2 border rounded" required>
+      <input type="number" name="price" placeholder="가격 (숫자만)" class="w-full px-4 py-2 border rounded" required>
+      <input type="file" name="image" accept="image/*" class="w-full px-4 py-2 border rounded">
+      <button type="submit" class="w-full bg-green-500 text-white py-2 rounded hover:bg-green-600">등록하기</button>
+    </form>
+  </div>
+</body>
+</html>

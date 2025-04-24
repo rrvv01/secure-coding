@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="max-w-6xl mx-auto p-6">
+  <h2 class="text-2xl font-bold mb-4">🚨 신고된 상품 목록</h2>
+  <ul class="space-y-4">
+    {% for report in reports %}
+    <li class="border p-4 rounded bg-white shadow-sm">
+      {% if report.reported_product %}
+        {% set product = report.reported_product %}
+        <p class="text-sm">
+          🔎 상품: <strong>{{ product.name }}</strong> |
+          등록자: {{ product.user.username }}
+          {% if product.is_hidden %}
+            <span class="ml-2 px-2 py-1 bg-red-100 text-red-600 text-xs rounded">🚫 차단됨</span>
+          {% else %}
+            <span class="ml-2 px-2 py-1 bg-green-100 text-green-600 text-xs rounded">✅ 활성</span>
+          {% endif %}
+        </p>
+        <p class="text-gray-600 text-sm">사유: {{ report.reason }}</p>
+
+        {% if not product.is_hidden %}
+        <form method="POST" action="/admin/products/{{ product.id }}/toggle" class="mt-2">
+          <button class="text-xs bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded">
+            차단하기
+          </button>
+        </form>
+        {% else %}
+        <p class="mt-2 text-xs text-gray-400">이미 차단된 상품입니다.</p>
+        {% endif %}
+
+      {% else %}
+        <p class="text-sm text-red-500">❌ 해당 상품이 삭제되어 존재하지 않습니다.</p>
+        <p class="text-gray-600 text-sm">사유: {{ report.reason }}</p>
+      {% endif %}
+    </li>
+    {% endfor %}
+  </ul>
+</div>
+{% endblock %}

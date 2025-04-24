@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}관리자 페이지{% endblock %}</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-50 text-gray-800">
+  <header class="bg-white px-6 py-4 shadow mb-6">
+    <h1 class="text-xl font-bold text-red-500">🛠 관리자 대시보드</h1>
+  </header>
+
+  <main class="max-w-5xl mx-auto px-4">
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <div class="mb-4">
+          {% for message in messages %}
+            <div class="bg-yellow-100 border border-yellow-300 text-yellow-800 px-4 py-2 rounded mb-2 shadow-sm text-sm">
+              {{ message }}
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    {% block content %}
+    <!-- 각 템플릿의 본문 -->
+    {% endblock %}
+  </main>
+</body>
+</html>

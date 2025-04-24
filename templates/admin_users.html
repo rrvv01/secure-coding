@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="max-w-6xl mx-auto p-6">
+  <h2 class="text-2xl font-bold mb-4">👥 전체 유저 관리</h2>
+  <table class="w-full table-auto border-collapse">
+    <thead class="bg-gray-100 text-sm">
+      <tr>
+        <th class="px-4 py-2 text-left">ID</th>
+        <th class="px-4 py-2 text-left">이름</th>
+        <th class="px-4 py-2 text-left">이메일</th>
+        <th class="px-4 py-2 text-left">상태</th>
+        <th class="px-4 py-2 text-center">조치</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for u in users %}
+      <tr class="border-t text-sm">
+        <td class="px-4 py-2">{{ u.id }}</td>
+        <td class="px-4 py-2">{{ u.username }}</td>
+        <td class="px-4 py-2">{{ u.email }}</td>
+        <td class="px-4 py-2">
+          {% if not u.is_active %}
+            <span class="text-red-500">휴면</span>
+          {% else %}
+            <span class="text-green-600">정상</span>
+          {% endif %}
+        </td>
+        <td class="text-center">
+          <form method="POST" action="/admin/users/{{ u.id }}/toggle">
+            <button class="text-sm bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded">
+              {% if not u.is_active %}복구{% else %}휴면 처리{% endif %}
+            </button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

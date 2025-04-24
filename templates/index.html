@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tiny Second-hand Market</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    .product:hover {
+      transform: translateY(-4px);
+      transition: all 0.2s ease-in-out;
+    }
+  </style>
+</head>
+<body class="bg-white text-gray-900">
+  <header class="px-4 py-3 shadow-sm sticky top-0 bg-white z-50">
+    <div class="max-w-6xl mx-auto flex justify-between items-center">
+      <h1 class="text-xl font-bold text-red-500">🧺 GS Market</h1>
+      <nav class="flex gap-4 text-sm">
+        {% if session.get('user_id') %}
+          {% if session.get('is_admin') %}
+            <a href="/admin" class="text-gray-700 hover:text-red-500 font-semibold">어드민 대시보드</a>
+          {% endif %}
+          <a href="/mypage" class="text-gray-700 hover:text-red-500">마이페이지</a>
+          <a href="/logout" class="text-gray-700 hover:text-red-500">로그아웃</a>
+        {% else %}
+          <a href="/login" class="text-gray-700 hover:text-red-500">로그인</a>
+          <a href="/register" class="text-gray-700 hover:text-red-500">회원가입</a>
+        {% endif %}
+      </nav>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 py-6">
+    <!-- 검색창 -->
+    <form method="GET" action="/" class="mb-6">
+      <input
+        type="text"
+        name="query"
+        placeholder="상품명으로 검색"
+        value="{{ request.args.get('query', '') }}"
+        class="w-full px-4 py-3 border border-red-400 rounded-lg shadow-sm focus:outline-none focus:border-red-500"
+      />
+    </form>
+
+    <!-- 상품 목록 -->
+    <section class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+      {% for product in products %}
+        <div onclick="location.href='/products/{{ product.id }}'" class="product bg-gray-50 p-3 rounded-lg border border-gray-100 shadow-sm cursor-pointer">
+          {% if product.image %}
+            <img src="{{ url_for('static', filename='uploads/' + product.image) }}" alt="{{ product.name }}" class="rounded-lg w-full h-40 object-cover mb-2">
+          {% else %}
+            <div class="w-full h-40 flex items-center justify-center bg-gray-200 text-sm text-gray-600 rounded mb-2">
+              이미지 없음
+            </div>
+          {% endif %}
+          <h2 class="text-sm font-medium">{{ product.name }}</h2>
+          <p class="text-xs text-gray-500">{{ "{:,}".format(product.price) }}원</p>
+        </div>
+      {% else %}
+        <p class="text-center col-span-4 text-gray-500">검색 결과가 없습니다.</p>
+      {% endfor %}
+    </section>
+
+    <!-- 기능 버튼 -->
+    <div class="flex justify-center gap-3 mt-8 flex-wrap">
+      <a href="/products" class="px-5 py-2 bg-indigo-500 text-white rounded hover:bg-indigo-600 shadow text-sm">전체 상품 보기</a>
+      <a href="/products/new" class="px-5 py-2 bg-red-500 text-white rounded hover:bg-red-600 text-sm shadow">상품 등록</a>
+      <a href="/report" class="px-5 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300 text-sm shadow">신고</a>
+      <a href="/chat" class="px-5 py-2 bg-green-500 text-white rounded hover:bg-green-600 text-sm shadow">💬 채팅</a>
+      <a href="/transfer" class="px-5 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600 text-sm shadow">💸 송금하기</a>
+    </div>
+  </main>
+</body>
+</html>

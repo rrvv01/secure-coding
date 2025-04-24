@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>유저 간 송금</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 py-10 px-4">
+  <div class="max-w-md mx-auto bg-white p-6 rounded shadow-md">
+    <h2 class="text-xl font-bold mb-4">💸 유저에게 송금하기</h2>
+
+    <!-- Flash 메시지 출력
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul class="mb-4">
+          {% for message in messages %}
+            <li class="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-2 rounded mb-2">
+              {{ message }}
+            </li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %} -->
+
+    <p class="mb-4 text-gray-600">
+      내 잔액: <span class="font-semibold text-green-600">{{ '{:,}'.format(balance) }} 원</span>
+    </p>
+
+    <form method="POST">
+      <div class="mb-4">
+        <label class="block text-sm font-medium text-gray-700">수신자</label>
+        <select name="recipient_id" required class="w-full mt-1 border rounded px-3 py-2">
+          {% for user in users %}
+            <option value="{{ user.id }}">{{ user.username }}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div class="mb-4">
+        <label class="block text-sm font-medium text-gray-700">금액</label>
+        <input type="number" name="amount" min="1" required class="w-full mt-1 border rounded px-3 py-2" placeholder="금액을 입력하세요">
+      </div>
+
+      <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600">송금하기</button>
+    </form>
+
+    <div class="mt-4 text-sm text-gray-600">
+      <a href="/mypage" class="text-blue-600 hover:underline">← 마이페이지로 돌아가기</a>
+    </div>
+  </div>
+</body>
+</html>

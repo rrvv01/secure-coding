@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="max-w-6xl mx-auto p-6">
+  <h2 class="text-2xl font-bold mb-4">⚠️ 신고된 유저 목록</h2>
+  <ul class="space-y-4">
+    {% for report in reports %}
+    <li class="border p-4 rounded bg-white shadow-sm">
+      <p class="text-sm">
+        👤 사용자: <strong>{{ report.reported_user.username }}</strong>
+        {% if not report.reported_user.is_active %}
+          <span class="ml-2 text-xs bg-gray-400 text-white px-2 py-1 rounded">휴면 계정</span>
+        {% endif %}
+      </p>
+      <p class="text-gray-600 text-sm">사유: {{ report.reason }}</p>
+      <form method="POST" action="/admin/users/{{ report.reported_user.id }}/toggle" class="mt-2">
+        {% if report.reported_user.is_active %}
+          <button class="text-xs bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded">
+            휴면 처리
+          </button>
+        {% else %}
+          <button class="text-xs bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded">
+            휴면 해제
+          </button>
+        {% endif %}
+      </form>
+    </li>
+    {% endfor %}
+  </ul>
+</div>
+{% endblock %}
